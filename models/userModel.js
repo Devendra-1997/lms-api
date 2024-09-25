@@ -1,5 +1,4 @@
 import userSchema from "./userSchema.js";
-
 // This file talks to database | user table
 
 // All Users
@@ -20,4 +19,9 @@ export const findUserByEmail = (email) => {
 // update users referesh token
 export const updateRefreshJWT = (email, refreshJWT) => {
   return userSchema.findOneAndUpdate({ email }, { refreshJWT });
+};
+
+// In userModel.js
+export const updateUserProfileById = async (userId, updateData) => {
+  return await userSchema.findByIdAndUpdate(userId, updateData, { new: true });
 };

@@ -20,12 +20,13 @@ import userRouter from "./routers/userRouter.js";
 import burrowRouter from "./routers/burrowRouter.js";
 import reviewRouter from "./routers/reviewRouter.js";
 import bookRouter from "./routers/bookRouter.js";
+import profileRouter from "./routers/profileRouter.js";
 
 app.use("/api/user", userRouter);
 app.use("/api/burrow", burrowRouter);
 app.use("/api/review", reviewRouter);
 app.use("/api/book", bookRouter);
-
+app.use("/api/user/profile", profileRouter);
 // start our server
 app.listen(PORT, (error) => {
   error ? console.log("Error", error) : console.log("Server is running");

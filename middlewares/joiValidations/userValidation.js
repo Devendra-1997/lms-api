@@ -21,3 +21,25 @@ export const newUserValidation = (req, res, next) => {
     console.log(error);
   }
 };
+
+// update profile
+
+export const updateUserProfileValidation = (req, res, next) => {
+  try {
+    const schema = Joi.object({
+      first_name: Joi.string().min(3).required(),
+      last_name: Joi.string().required(),
+      email: Joi.string().email({ minDomainSegments: 2 }).required(),
+      phone: Joi.string().optional(),
+    });
+
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return buildErrorResponse(res, error.message);
+    }
+
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
