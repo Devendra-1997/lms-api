@@ -17,21 +17,21 @@ const reviewRouter = express.Router();
 
 // Public Routes
 
-// GET all reviews
-reviewRouter.get("/", userAuth, async (req, res) => {
+// GET reviews, optionally filter by book_id
+reviewRouter.get("/", userAuth, async (req, res, next) => {
   try {
-    const { role, _id } = req.userInfo;
+    const { role } = req.userInfo;
+    const { book_id } = req.query;
 
-    const reviews =
-      role === "admin"
-        ? await getManyReview({})
-        : await getManyReview({ status: "active" });
+    const filter = role === "admin" ? {} : { status: "active" };
+    if (book_id) filter.book_id = book_id;
 
+    const reviews = await getManyReview(filter).lean();
     reviews?.length
-      ? buildSuccessResponse(res, reviews, "Reviews")
-      : buildErrorResponse(res, "No reviews available");
+      ? buildSuccessResponse(res, reviews, "Reviews fetched successfully.")
+      : buildErrorResponse(res, "No reviews available.");
   } catch (error) {
-    buildErrorResponse(res, error.message);
+    next(error);
   }
 });
 // Private Routes
