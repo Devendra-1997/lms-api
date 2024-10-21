@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+
+// deploy database in monogo atlas
 const DB_CONNECT_URL = process.env.DB_CONNECT_URL;
 
 export const connectToMongoDb = () => {
